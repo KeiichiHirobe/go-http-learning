@@ -3,14 +3,15 @@ package fifo
 // http://www.kmonos.net/pub/Presen/PFDS.pdf
 
 // TwoList represents a two list queue.
+// TwoList is persistent list.
 // The zero value for List is an empty list ready to use.
 type TwoList struct {
 	head *Element
 	tail *Element
 }
 
-// PushBack inserts a new element e with value v at the back of list l and returns e and new Plist.
-func (l TwoList) PushBack(v interface{}) (*Element, TwoList) {
+// PushBack inserts a new element e with value v at the back of list l and returns e.
+func (l *TwoList) PushBack(v interface{}) *Element {
 	e := &Element{
 		Value: v,
 	}
@@ -20,20 +21,20 @@ func (l TwoList) PushBack(v interface{}) (*Element, TwoList) {
 		e.next = l.tail
 		l.tail = e
 	}
-	return e, l
+	return e
 }
 
-// PopFront remove removes e from head of list l and returns e and ne Plist.
+// PopFront remove removes e from head of list l and returns e.
 // Return nil if empty.
-func (l TwoList) PopFront() (*Element, TwoList) {
+func (l *TwoList) PopFront() *Element {
 	head := l.head
 	if head != nil {
 		l.head = head.next
-		return head, l
+		return head
 	}
 
 	if l.tail == nil {
-		return nil, l
+		return nil
 	}
 
 	// list which starts from head is empty, so
@@ -51,5 +52,5 @@ func (l TwoList) PopFront() (*Element, TwoList) {
 	// reset list
 	l.tail = nil
 	l.head = prev.next
-	return prev, l
+	return prev
 }

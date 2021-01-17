@@ -56,3 +56,29 @@ func checkTwoList(t *testing.T, l *TwoList, es []interface{}) {
 		t.Errorf("length = %d, want %d", i, len(es))
 	}
 }
+
+func checkTwoListSlice(t *testing.T, l *TwoListSlice, es []interface{}) {
+	t.Helper()
+	var vlist []interface{}
+	vlist = append(l.head[l.headPos:], l.tail...)
+	for i, v := range vlist {
+		if v != es[i] {
+			t.Errorf("elt[%d].Value = %v, want %v", i, v, es[i])
+		}
+	}
+	if len(es) != l.Len() {
+		t.Errorf("length = %d, want %d", l.Len(), len(es))
+	}
+}
+
+func checkNaiveListSlice(t *testing.T, l *NaiveListSlice, es []interface{}) {
+	t.Helper()
+	for i, v := range *l {
+		if v != es[i] {
+			t.Errorf("elt[%d].Value = %v, want %v", i, v, es[i])
+		}
+	}
+	if len(es) != l.Len() {
+		t.Errorf("length = %d, want %d", l.Len(), len(es))
+	}
+}

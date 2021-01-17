@@ -7,9 +7,9 @@ type PList struct {
 	tail *Element
 }
 
-// PushBack inserts a new element e with value v at the back of list l and returns e and new Plist.
-func (l PList) PushBack(v interface{}) (*Element, PList) {
-	l = l.Clone()
+// PushBack inserts a new element e with value v at the back of list l and returns e.
+func (l *PList) PushBack(v interface{}) *Element {
+	l.Clone()
 	e := &Element{
 		Value: v,
 	}
@@ -20,18 +20,18 @@ func (l PList) PushBack(v interface{}) (*Element, PList) {
 		l.tail.next = e
 		l.tail = e
 	}
-	return e, l
+	return e
 }
 
-// PopFront remove removes e from head of list l and returns e and ne Plist.
+// PopFront remove removes e from head of list l and returns e.
 // Return nil if empty.
-func (l PList) PopFront() (*Element, PList) {
-	l = l.Clone()
+func (l *PList) PopFront() *Element {
+	l.Clone()
 	head := l.head
 
 	if head == nil {
 		// zero length
-		return nil, l
+		return nil
 	} else if head == l.tail {
 		// one length
 		l.head = nil
@@ -43,10 +43,10 @@ func (l PList) PopFront() (*Element, PList) {
 		// avoid memory leaks
 		head.next = nil
 	}
-	return head, l
+	return head
 }
 
-func (l PList) Clone() PList {
+func (l *PList) Clone() {
 	var head, prev *Element
 	for e := l.head; e != nil; e = e.next {
 		el := &Element{
@@ -61,5 +61,4 @@ func (l PList) Clone() PList {
 	}
 	l.head = head
 	l.tail = prev
-	return l
 }
