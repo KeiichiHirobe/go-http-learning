@@ -31,8 +31,9 @@ func (l *TwoListSlice) PopFront() interface{} {
 		// Pick up tail as new head, clear tail.
 		l.head, l.headPos, l.tail = l.tail, 0, l.head[:0]
 	}
-	w := l.head[l.headPos]
+	v := l.head[l.headPos]
+	// avoid memory leaks
 	l.head[l.headPos] = nil
 	l.headPos++
-	return w
+	return v
 }
