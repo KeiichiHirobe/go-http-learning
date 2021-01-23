@@ -82,3 +82,10 @@ func checkNaiveListSlice(t *testing.T, l *NaiveListSlice, es []interface{}) {
 		t.Errorf("length = %d, want %d", l.Len(), len(es))
 	}
 }
+
+func checkEqualEl(t *testing.T, x interface{}, want interface{}) {
+	t.Helper()
+	if x != want {
+		t.Errorf("value = %v, want %v", x, want)
+	}
+}

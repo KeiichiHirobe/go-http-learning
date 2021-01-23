@@ -12,7 +12,18 @@ func (l *NaiveListSlice) PushBack(v interface{}) {
 
 func (l *NaiveListSlice) PopFront() interface{} {
 	list := *l
+	if len(list) == 0 {
+		return nil
+	}
 	v := list[0]
 	*l = list[1:]
 	return v
+}
+
+func (l *NaiveListSlice) Next() interface{} {
+	list := *l
+	if len(list) == 0 {
+		return nil
+	}
+	return list[0]
 }
