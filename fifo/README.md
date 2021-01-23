@@ -13,9 +13,9 @@
   
 * NaiveListSlice
   * Most simple implementation by slice
-  * Persistent queue.
+  * Not a Persistent queue as my TestNaiveListSliceCopyOverWrite shows.
   
 * TwoListSlice
   * [Two list queue by Russ Cox](https://github.com/golang/go/blob/682a1d2176b02337460aeede0ff9e49429525195/src/net/http/transport.go#L1242-L1306)
   * Two list queue without the overhead of reversing the list when swapping stages.
-  * NOT a persistent queue as my test shows.
+  * NOT a persistent queue as my TestTwoListSliceCopy shows.
