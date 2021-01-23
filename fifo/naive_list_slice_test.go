@@ -10,7 +10,7 @@ func TestNaiveListSliceCopy(t *testing.T) {
 	checkNaiveListSlice(t, &l, []interface{}{1, 2})
 	checkNaiveListSlice(t, &l2, []interface{}{1, 2})
 	l.PopFront()
-	checkEqualEl(t, l.Next(), interface{}(2))
+	checkEqualEl(t, l.PeekFront(), interface{}(2))
 	checkNaiveListSlice(t, &l, []interface{}{2})
 	checkNaiveListSlice(t, &l2, []interface{}{1, 2})
 	l.PopFront()
@@ -18,7 +18,7 @@ func TestNaiveListSliceCopy(t *testing.T) {
 	checkNaiveListSlice(t, &l2, []interface{}{1, 2})
 	// when empty, return nil
 	l.PopFront()
-	checkEqualEl(t, l.Next(), nil)
+	checkEqualEl(t, l.PeekFront(), nil)
 	checkNaiveListSlice(t, &l, nil)
 	checkNaiveListSlice(t, &l2, []interface{}{1, 2})
 	l.PushBack(3)

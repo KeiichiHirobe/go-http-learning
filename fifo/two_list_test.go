@@ -39,6 +39,8 @@ func TestTwoListCopy2(t *testing.T) {
 	l2.PushBack(5)
 	checkTwoList(t, &l, []interface{}{1, 2, 3, 4})
 	checkTwoList(t, &l2, []interface{}{1, 2, 3, 5})
+	checkEqualEl(t, l.PeekFront().Value, 1)
+	checkEqualEl(t, l.PeekFront().Value, 1)
 	checkEqualEl(t, l.PopFront().Value, 1)
 	checkEqualEl(t, l.PopFront().Value, 2)
 	checkEqualEl(t, l.PopFront().Value, 3)

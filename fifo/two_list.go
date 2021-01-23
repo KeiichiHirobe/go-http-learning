@@ -24,12 +24,26 @@ func (l *TwoList) PushBack(v interface{}) *Element {
 	return e
 }
 
-// PopFront remove removes e from head of list l and returns e.
+// PopFront removes e from head of list l and returns e.
 // Return nil if empty.
 func (l *TwoList) PopFront() *Element {
+	return l.seekFront(true)
+}
+
+// PeekFront peek head of list l and returns e. Never remove.
+// Reverse may occur if need.
+func (l *TwoList) PeekFront() *Element {
+	return l.seekFront(false)
+}
+
+// seekFront seek head of list l and returns e.
+// If remove is true, remove e from list.
+func (l *TwoList) seekFront(remove bool) *Element {
 	head := l.head
 	if head != nil {
-		l.head = head.next
+		if remove {
+			l.head = head.next
+		}
 		return head
 	}
 
@@ -51,6 +65,10 @@ func (l *TwoList) PopFront() *Element {
 	}
 	// reset list
 	l.tail = nil
-	l.head = prev.next
+	if !remove {
+		l.head = prev
+	} else {
+		l.head = prev.next
+	}
 	return prev
 }

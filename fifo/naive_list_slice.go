@@ -20,7 +20,7 @@ func (l *NaiveListSlice) PopFront() interface{} {
 	return v
 }
 
-func (l *NaiveListSlice) Next() interface{} {
+func (l *NaiveListSlice) PeekFront() interface{} {
 	list := *l
 	if len(list) == 0 {
 		return nil
