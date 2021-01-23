@@ -1,4 +1,4 @@
-# 5 FIFO implementations by Go
+# 6 FIFO implementations by Go
 
 * SList
   * Singly linked list. Each element has value and next link. List has both of head and tail link.
@@ -11,6 +11,11 @@
   * Persistent queue.
   * Reverse the list when swapping stages.
   
+* BankerList
+  * [Banker queue by Okasaki](https://www.amazon.co.jp/-/en/Chris-Okasaki/dp/0521631246)
+  * Persistent queue.
+  * Reverse the list lazily and result of it is memorized.
+
 * NaiveListSlice
   * Most simple implementation by slice
   * Not a Persistent queue as my TestNaiveListSliceCopyOverWrite shows.
