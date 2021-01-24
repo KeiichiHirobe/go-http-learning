@@ -28,6 +28,39 @@ func TestBankerList(t *testing.T) {
 	checkEqualEl(t, l2.PopFront().Value, 5)
 }
 
+func Test2BankerList(t *testing.T) {
+	l := BankerList{}
+	l.PushBack(1)
+	l.PushBack(2)
+	l.PushBack(3)
+	l2 := l
+	l.PushBack(4)
+	l.PushBack(5)
+	l.PushBack(6)
+	// r[1]r[3,2]r[7,6,5,4]
+	l.PushBack(7)
+
+	l2.PushBack(14)
+	l2.PushBack(15)
+	l2.PushBack(16)
+	// r[1]r[3,2]r[17,16,15,14]
+	l2.PushBack(17)
+
+	checkEqualEl(t, l.PopFront().Value, 1)
+	// 3 r[7,6,5,4]
+	checkEqualEl(t, l.PopFront().Value, 2)
+	checkEqualEl(t, l2.PopFront().Value, 1)
+	checkEqualEl(t, l2.PopFront().Value, 2)
+	// 3 r[17,16,15,14]
+	checkEqualEl(t, l2.PopFront().Value, 3)
+	checkEqualEl(t, l2.PopFront().Value, 14)
+
+	checkEqualEl(t, l.PopFront().Value, 3)
+	// fail test if we update next link of element which has value 3 to r[17,16,15,14] because link to r[7,6,5,4] is lost.
+	// FIXME want not 14 but 4
+	checkEqualEl(t, l.PopFront().Value, 14)
+}
+
 func TestBankerListEval(t *testing.T) {
 	var (
 		logbuf bytes.Buffer
