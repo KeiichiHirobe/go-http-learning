@@ -57,6 +57,7 @@ func Test2BankerList(t *testing.T) {
 
 	checkEqualEl(t, l.PopFront().Value, 3)
 	// fail test below if we update next link of element which has value 3 to r[17,16,15,14] because link to r[7,6,5,4] is lost.
+	// commit https://github.com/KeiichiHirobe/go-http-learning/commit/37c44bc0720cbf0aea477234955d1e13bf8aaa3c fix this problem.
 	checkEqualEl(t, l.PopFront().Value, 4)
 }
 
