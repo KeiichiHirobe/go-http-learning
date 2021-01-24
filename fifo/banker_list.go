@@ -15,9 +15,12 @@ var (
 // The zero value for List is an empty list ready to use.
 // see also http://www.kmonos.net/pub/Presen/PFDS.pdf
 type BankerList struct {
-	// head is a list of *Element or *headL.
+	// head is a list of *headL.
 	// head is a persistent queue.
 	head TwoList
+	// reversed is a list after evaluation of reverse.
+	// at PopFront, first see reversed, and if empty PopFront from head and reverse the list and set to reversed.
+	reversed *Element
 	// the number of element like tailN, not the number of element for head.
 	headN int
 	tail  *Element
@@ -28,7 +31,6 @@ type BankerList struct {
 // reverse lazily and result is memorized.
 type headL struct {
 	head *Element
-	tail *Element
 	once sync.Once
 }
 
@@ -44,8 +46,6 @@ func (l *headL) eval() {
 				}
 				if prev != nil {
 					el.next = prev
-				} else {
-					l.tail = el
 				}
 				prev = el
 			}
@@ -75,24 +75,20 @@ func (l *BankerList) PushBack(v interface{}) *Element {
 // PopFront removes e from head of list l and returns e.
 // Return nil if empty.
 func (l *BankerList) PopFront() *Element {
-	el := l.head.PopFront()
-	if el == nil {
-		return nil
-	}
-	he, ok := el.Value.(*headL)
-	// if value of el is *headL, unnest list.
-	if ok {
-		he.eval()
-		el = he.head
+	if l.reversed == nil {
+		el := l.head.PopFront()
 		if el == nil {
-			panic("Must not be empty")
+			return nil
 		}
-		// the number of element for he is more than one.
-		if el.next != nil {
-			he.tail.next = l.head.PeekFront()
-			l.head.head = el.next
-		}
+		he := el.Value.(*headL)
+		he.eval()
+		l.reversed = he.head
 	}
+	if l.reversed == nil {
+		panic("Must not be empty")
+	}
+	el := l.reversed
+	l.reversed = l.reversed.next
 	l.headN--
 	l.Chk()
 	return el

@@ -56,9 +56,8 @@ func Test2BankerList(t *testing.T) {
 	checkEqualEl(t, l2.PopFront().Value, 14)
 
 	checkEqualEl(t, l.PopFront().Value, 3)
-	// fail test if we update next link of element which has value 3 to r[17,16,15,14] because link to r[7,6,5,4] is lost.
-	// FIXME want not 14 but 4
-	checkEqualEl(t, l.PopFront().Value, 14)
+	// fail test below if we update next link of element which has value 3 to r[17,16,15,14] because link to r[7,6,5,4] is lost.
+	checkEqualEl(t, l.PopFront().Value, 4)
 }
 
 func TestBankerListEval(t *testing.T) {
