@@ -87,7 +87,7 @@ func (l *BankerList) PopFront() *Element {
 		if el == nil {
 			panic("Must not be empty")
 		}
-		// number of element of he is more than one
+		// the number of element for he is more than one.
 		if el.next != nil {
 			he.tail.next = l.head.PeekFront()
 			l.head.head = el.next
