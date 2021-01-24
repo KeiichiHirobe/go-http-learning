@@ -2,6 +2,20 @@ package fifo
 
 import "testing"
 
+// based on net/http test code.
+func unnilTestHook(f *func()) {
+	if *f == nil {
+		*f = nop
+	}
+}
+
+func hookSetter(dst *func()) func(func()) {
+	return func(fn func()) {
+		unnilTestHook(&fn)
+		*dst = fn
+	}
+}
+
 func checkList(t *testing.T, l *SList, es []interface{}) {
 	t.Helper()
 	i := 0
@@ -84,6 +98,13 @@ func checkNaiveListSlice(t *testing.T, l *NaiveListSlice, es []interface{}) {
 }
 
 func checkEqualEl(t *testing.T, x interface{}, want interface{}) {
+	t.Helper()
+	if x != want {
+		t.Errorf("value = %v, want %v", x, want)
+	}
+}
+
+func checkEqualLogBuf(t *testing.T, x string, want string) {
 	t.Helper()
 	if x != want {
 		t.Errorf("value = %v, want %v", x, want)

@@ -4,6 +4,12 @@ import (
 	"sync"
 )
 
+func nop() {}
+
+var (
+	testHookEvaluated = nop
+)
+
 // BankerList represents a banker queue.
 // BankerList is persistent list.
 // The zero value for List is an empty list ready to use.
@@ -44,6 +50,8 @@ func (l *headL) eval() {
 				prev = el
 			}
 			l.head = prev
+			// for test.
+			testHookEvaluated()
 		},
 	)
 }
